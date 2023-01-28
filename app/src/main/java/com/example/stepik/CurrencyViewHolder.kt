@@ -15,6 +15,5 @@ class CurrencyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         etAmount.setText(currency.amount)
         ivFlag.setImageResource(currency.flagRes)
         tvInfo.text = currency.info
-
     }
 }
