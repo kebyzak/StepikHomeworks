@@ -3,6 +3,8 @@ package com.example.stepik
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +13,27 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var adapter: CurrencyAdapter
     lateinit var rvCurrency: RecyclerView
+
+    private val itemTouchHelper by lazy {
+        ItemTouchHelper(object : SimpleCallback(UP or DOWN, LEFT or RIGHT) {
+
+            override fun onMove(recyclerView: RecyclerView,
+                                viewHolder: RecyclerView.ViewHolder,
+                                target: RecyclerView.ViewHolder): Boolean {
+                val from = viewHolder.adapterPosition
+                val to = target.adapterPosition
+                adapter.moveItem(from, to)
+                adapter.notifyItemMoved(from, to)
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val myPosition = viewHolder.adapterPosition
+                adapter.deleteOnSwipe(myPosition)
+                adapter.notifyItemRemoved(myPosition)
+            }
+        })
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         rvCurrency.adapter = adapter
         rvCurrency.layoutManager = layoutManager
+        itemTouchHelper.attachToRecyclerView(rvCurrency)
     }
 
     private fun fillListWithData() {

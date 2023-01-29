@@ -21,6 +21,19 @@ class CurrencyAdapter(private val layoutInflater: LayoutInflater) : RecyclerView
         currencies.add(position, currency)
         notifyItemInserted(position)
     }
+
+    fun moveItem(from : Int, to : Int){
+        val fromPosition = currencies[from]
+        currencies.removeAt(from)
+        if(to < from) {
+            currencies.add(to, fromPosition)
+        } else {
+            currencies.add(to-1, fromPosition)
+        }
+    }
+    fun deleteOnSwipe(position: Int){
+        currencies.removeAt(position)
+    }
     override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
         holder.bind(currencies[position])
     }
