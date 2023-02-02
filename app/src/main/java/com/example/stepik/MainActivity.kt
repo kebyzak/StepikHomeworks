@@ -1,81 +1,118 @@
 package com.example.stepik
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.*
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSmoothScroller
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+
+const val CORRECT_PIN = "1567"
+const val PIN_LENGTH = 4
 
 class MainActivity : AppCompatActivity() {
-
-    lateinit var adapter: CurrencyAdapter
-    lateinit var rvCurrency: RecyclerView
-
-    private val itemTouchHelper by lazy {
-        ItemTouchHelper(object : SimpleCallback(UP or DOWN, LEFT or RIGHT) {
-
-            override fun onMove(recyclerView: RecyclerView,
-                                viewHolder: RecyclerView.ViewHolder,
-                                target: RecyclerView.ViewHolder): Boolean {
-                val from = viewHolder.adapterPosition
-                val to = target.adapterPosition
-                adapter.moveItem(from, to)
-                adapter.notifyItemMoved(from, to)
-                return true
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val myPosition = viewHolder.adapterPosition
-                adapter.deleteOnSwipe(myPosition)
-                adapter.notifyItemRemoved(myPosition)
-            }
-        })
-    }
-
+    private var pinText = ""
+    lateinit var tvPin: TextView
+    var errorColor: Int = Color.BLACK
+    var pinTextColor: Int = Color.BLACK
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initRecycler()
-        fillListWithData()
-        initAddButton()
+        initColors()
+        initTvPin()
+        initNumButtons()
+        initBackspaceButton()
+        initOkButton()
     }
 
-    private fun initRecycler() {
-        adapter = CurrencyAdapter(layoutInflater)
-        val layoutManager = LinearLayoutManager(this)
-        rvCurrency = findViewById(R.id.rv_currencies)
-
-        rvCurrency.adapter = adapter
-        rvCurrency.layoutManager = layoutManager
-        itemTouchHelper.attachToRecyclerView(rvCurrency)
+    private fun initColors() {
+        errorColor = ContextCompat.getColor(this, R.color.error)
+        pinTextColor = ContextCompat.getColor(this, R.color.color_primary)
     }
 
-    private fun fillListWithData() {
-        val currencies = mutableListOf<Currency>()
-        currencies.add(Currency("20000", R.drawable.img_flag_kz, "Тенге, Казахстан"))
-        currencies.add(Currency("", R.drawable.img_flag_usa, "Доллары, США"))
-        currencies.add(Currency("100", R.drawable.img_flag_tr, "Лира, Турция"))
-        currencies.add(Currency("100", R.drawable.img_flag_eu, "Евро, ЕС"))
-        currencies.add(Currency("", 0, ""))
-        adapter.updateDataSet(currencies)
+    private fun initTvPin() {
+        tvPin = findViewById(R.id.tv_pin)
     }
 
-    private fun initAddButton() {
-        val btnAdd: Button = findViewById(R.id.btn_add)
-        btnAdd.setOnClickListener {
-            val currency = Currency("100", R.drawable.img_flag_kz, "Тенге, Казахстан")
-            val position = 0
-            adapter.addItemToPosition(currency = currency, position = position)
+    private fun initNumButtons() {
+        val btnOne: Button = findViewById(R.id.btn_one)
+        btnOne.setOnClickListener(this::onNumButtonClick)
 
-            val smoothScroller = object : LinearSmoothScroller(this) {
-                override fun getVerticalSnapPreference(): Int = LinearSmoothScroller.SNAP_TO_START
-            }
-            smoothScroller.targetPosition = position
-            rvCurrency.layoutManager?.startSmoothScroll(smoothScroller)
+        val btnTwo: Button = findViewById(R.id.btn_two)
+        btnTwo.setOnClickListener(this::onNumButtonClick)
+
+        val btnThree: Button = findViewById(R.id.btn_three)
+        btnThree.setOnClickListener(this::onNumButtonClick)
+
+        val btnFour: Button = findViewById(R.id.btn_four)
+        btnFour.setOnClickListener(this::onNumButtonClick)
+
+        val btnFive: Button = findViewById(R.id.btn_five)
+        btnFive.setOnClickListener(this::onNumButtonClick)
+
+        val btnSix: Button = findViewById(R.id.btn_six)
+        btnSix.setOnClickListener(this::onNumButtonClick)
+
+        val btnSeven: Button = findViewById(R.id.btn_seven)
+        btnSeven.setOnClickListener(this::onNumButtonClick)
+
+        val btnEight: Button = findViewById(R.id.btn_eight)
+        btnEight.setOnClickListener(this::onNumButtonClick)
+
+        val btnNine: Button = findViewById(R.id.btn_nine)
+        btnNine.setOnClickListener(this::onNumButtonClick)
+
+        val btnZero: Button = findViewById(R.id.btn_zero)
+        btnZero.setOnClickListener(this::onNumButtonClick)
+    }
+
+    private fun initBackspaceButton() {
+        val btnBackspace = findViewById<Button>(R.id.btn_backspace)
+        btnBackspace.setOnClickListener {
+            pinText = pinText.dropLast(1)
+            updatePinTextView()
+        }
+
+        btnBackspace.setOnLongClickListener {
+            pinText = pinText.drop(4)
+            updatePinTextView()
+            true
         }
     }
+
+    private fun initOkButton() {
+        val btnOk = findViewById<Button>(R.id.btn_ok)
+        btnOk.setOnClickListener {
+            checkIfPinIsCorrect()
+        }
+    }
+
+    private fun checkIfPinIsCorrect() {
+        if (pinText == CORRECT_PIN) {
+            Toast.makeText(this, R.string.pin_is_correct, Toast.LENGTH_LONG).show()
+        } else {
+            tvPin.setTextColor(errorColor)
+        }
+    }
+
+    private fun onNumButtonClick(view: View) {
+        if (view !is Button) return
+
+        val clickedNum = view.text
+        pinText += clickedNum
+
+        updatePinTextView()
+    }
+
+    private fun updatePinTextView() {
+        if (pinText.length > PIN_LENGTH) {
+            pinText = pinText.substring(0, PIN_LENGTH)
+        }
+        tvPin.text = pinText
+        tvPin.setTextColor(pinTextColor)
+    }
+
 }

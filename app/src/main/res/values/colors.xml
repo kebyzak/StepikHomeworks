@@ -7,7 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="hint">#828282</color>
-    <color name="flag_bg">#F5F5F5</color>
-    <color name="primary">#1789DB</color>
+    <color name="color_primary">#1789DB</color>
+    <color name="button_bg">#F5F5F5</color>
+    <color name="hint">#808080</color>
+    <color name="error">#F91717</color>
+    <color name="green">#17DB5A</color>
+    <color name="green_gradient">#00FE25</color>
+    <color name="red_stroke">#E80A0A</color>
+    <color name="red">#E17171</color>
 </resources>
