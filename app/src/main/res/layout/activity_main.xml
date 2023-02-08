@@ -4,24 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:title="Converter"
+        android:padding="0dp"
+        app:titleTextAppearance="@style/ToolbarStyle"
+        android:background="@color/white" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_currencies"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scrollbars="vertical|horizontal"/>
-    
+        android:scrollbars="vertical|horizontal" />
+
     <Button
         android:id="@+id/btn_add"
+        style="@style/ListItemTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add"
+        android:layout_margin="20dp"
         android:backgroundTint="@color/flag_bg"
-        style="@style/ListItemTextStyle"
         android:drawableLeft="@drawable/ic_plus"
-        android:layout_margin="20dp"/>
+        android:text="@string/add" />
 
 </LinearLayout>

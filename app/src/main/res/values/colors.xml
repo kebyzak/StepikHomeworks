@@ -10,4 +10,5 @@
     <color name="hint">#828282</color>
     <color name="flag_bg">#F5F5F5</color>
     <color name="primary">#1789DB</color>
+    <color name="title_text">#808080</color>
 </resources>

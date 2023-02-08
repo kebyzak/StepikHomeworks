@@ -2,7 +2,11 @@ package com.example.stepik
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,9 +21,11 @@ class MainActivity : AppCompatActivity() {
     private val itemTouchHelper by lazy {
         ItemTouchHelper(object : SimpleCallback(UP or DOWN, LEFT or RIGHT) {
 
-            override fun onMove(recyclerView: RecyclerView,
-                                viewHolder: RecyclerView.ViewHolder,
-                                target: RecyclerView.ViewHolder): Boolean {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
                 val from = viewHolder.adapterPosition
                 val to = target.adapterPosition
                 adapter.moveItem(from, to)
@@ -42,6 +48,45 @@ class MainActivity : AppCompatActivity() {
         initRecycler()
         fillListWithData()
         initAddButton()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.sort_by_alphabet -> {
+                sortByAlphabet()
+                item.isChecked = true
+                true
+            }
+            R.id.sort_by_price -> {
+                sortByPrice()
+                item.isChecked = true
+                true
+            }
+            R.id.reset_sort -> {
+                resetSort()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun sortByAlphabet() {
+        adapter.sortByAlphabet()
+    }
+
+    private fun sortByPrice() {
+        adapter.sortByPrice()
+    }
+
+    private fun resetSort() {
+        adapter.resetSort()
+        fillListWithData()
     }
 
     private fun initRecycler() {

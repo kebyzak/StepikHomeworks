@@ -2,4 +2,9 @@
     <string name="app_name">Stepik</string>
     <string name="add">Добавить</string>
     <string name="amount">Сумма</string>
+    <string name="reset_sort">Сбросить сортировку</string>
+    <string name="sort_by">Сортировать по</string>
+    <string name="sort_alphabet">Алфавиту</string>
+    <string name="sort_price">Стоимости</string>
+    <string name="close">Закрыть</string>
 </resources>
