@@ -27,6 +27,10 @@ class CurrencyAdapter(private val layoutInflater: LayoutInflater) :
         notifyItemInserted(position)
     }
 
+    override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
+        holder.bind(currencies[position])
+    }
+
     fun moveItem(from: Int, to: Int) {
         val fromPosition = currencies[from]
         currencies.removeAt(from)
@@ -55,12 +59,8 @@ class CurrencyAdapter(private val layoutInflater: LayoutInflater) :
         notifyDataSetChanged()
     }
 
-    fun resetSort(){
+    fun resetSort() {
         currencies.clear()
         notifyDataSetChanged()
-    }
-
-    override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
-        holder.bind(currencies[position])
     }
 }
