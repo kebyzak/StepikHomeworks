@@ -1,16 +1,26 @@
 package com.example.stepik
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class CurrencyAdapter(private val layoutInflater: LayoutInflater) :
-    RecyclerView.Adapter<CurrencyViewHolder>() {
+class CurrencyAdapter(
+    private val layoutInflater: LayoutInflater,
+    private val onLongClickListener: OnLongClickListener
+) : RecyclerView.Adapter<CurrencyViewHolder>() {
+
+    interface OnLongClickListener {
+        fun onLongClick(itemView: View, currency: Currency)
+    }
+
+
     private val currencies: MutableList<Currency> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
         val view = layoutInflater.inflate(R.layout.item_currency, parent, false)
         return CurrencyViewHolder(view)
     }
+
 
     override fun getItemCount(): Int {
         return currencies.size
@@ -28,7 +38,7 @@ class CurrencyAdapter(private val layoutInflater: LayoutInflater) :
     }
 
     override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
-        holder.bind(currencies[position])
+        holder.bind(currency = currencies[position], onLongClickListener)
     }
 
     fun moveItem(from: Int, to: Int) {
@@ -43,6 +53,12 @@ class CurrencyAdapter(private val layoutInflater: LayoutInflater) :
 
     fun deleteOnSwipe(position: Int) {
         currencies.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun deleteOnLongClick(currency: Currency) {
+        currencies.remove(currency)
+        notifyItemRemoved(currencies.indexOf(currency))
     }
 
     fun sortByAlphabet() {

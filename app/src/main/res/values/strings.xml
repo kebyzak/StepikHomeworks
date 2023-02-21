@@ -7,4 +7,7 @@
     <string name="sort_alphabet">Алфавиту</string>
     <string name="sort_price">Стоимости</string>
     <string name="close">Закрыть</string>
+    <string name="cancel">Отмена</string>
+    <string name="delete">Удалить</string>
+    <string name="delete_confirm">Вы уверены, что хотите удалить валюту?</string>
 </resources>
