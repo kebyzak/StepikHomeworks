@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import java.text.FieldPosition
 
 class MainActivity : AppCompatActivity() {
 
@@ -67,7 +68,6 @@ class MainActivity : AppCompatActivity() {
                     itDelete = currency
                     invalidateOptionsMenu()
                 }
-
             })
         val layoutManager = LinearLayoutManager(this)
         rvCurrency = findViewById(R.id.rv_currencies)
@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity() {
     private fun showDeleteDialog() {
         DeleteDialogFragment(object : DeleteDialogFragment.OnDeleteListener {
             override fun onDelete() {
-                rvCurrency.deleteOnLongClick(itDelete)
+                adapter.deleteOnLongClick(itDelete)
             }
         }).show(supportFragmentManager, null)
         isDeleteCalled = false
