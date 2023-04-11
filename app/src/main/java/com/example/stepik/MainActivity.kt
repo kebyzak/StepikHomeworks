@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
-import java.text.FieldPosition
 
 class MainActivity : AppCompatActivity() {
 
@@ -79,10 +78,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun fillListWithData() {
         val currencies = mutableListOf<Currency>()
-        currencies.add(Currency("20000", R.drawable.img_flag_kz, "Тенге, Казахстан"))
-        currencies.add(Currency("", R.drawable.img_flag_usa, "Доллары, США"))
+        currencies.add(Currency("49260", R.drawable.img_flag_kz, "Тенге, Казахстан"))
+        currencies.add(Currency("110", R.drawable.img_flag_usa, "Доллары, США"))
         currencies.add(Currency("100", R.drawable.img_flag_tr, "Лира, Турция"))
-        currencies.add(Currency("100", R.drawable.img_flag_eu, "Евро, ЕС"))
+        currencies.add(Currency("2100", R.drawable.img_flag_eu, "Евро, ЕС"))
         currencies.add(Currency("", 0, ""))
         adapter.updateDataSet(currencies)
     }
@@ -90,7 +89,7 @@ class MainActivity : AppCompatActivity() {
     private fun initAddButton() {
         val btnAdd: Button = findViewById(R.id.btn_add)
         btnAdd.setOnClickListener {
-            val currency = Currency("100", R.drawable.img_flag_kz, "Тенге, Казахстан")
+            val currency = Currency("49260", R.drawable.img_flag_kz, "Тенге, Казахстан")
             val position = 0
             adapter.addItemToPosition(currency = currency, position = position)
 
