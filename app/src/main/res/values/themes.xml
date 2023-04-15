@@ -19,6 +19,13 @@
         <item name="android:textSize">22sp</item>
     </style>
 
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/primary</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="errorEnabled">true</item>
+        <item name="hintTextColor">@color/primary</item>
+    </style>
+
     <style name="ToolbarStyle">
         <item name="android:textColor">@color/title_text</item>
         <item name="android:textStyle">bold</item>

@@ -6,8 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class CurrencyAdapter(
-    private val layoutInflater: LayoutInflater,
-    private val onLongClickListener: OnLongClickListener
+    private val layoutInflater: LayoutInflater, private val onLongClickListener: OnLongClickListener
 ) : RecyclerView.Adapter<CurrencyViewHolder>() {
 
     interface OnLongClickListener {

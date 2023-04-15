@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -11,26 +12,31 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        app:title="Converter"
         android:padding="0dp"
-        app:titleTextAppearance="@style/ToolbarStyle"
-        android:background="@color/white" />
+        app:title="Converter"
+        app:titleTextAppearance="@style/ToolbarStyle" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_currencies"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/primary" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment_am"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scrollbars="vertical|horizontal" />
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_bar" />
 
-    <Button
-        android:id="@+id/btn_add"
-        style="@style/ListItemTextStyle"
-        android:layout_width="wrap_content"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/flag_bg"
-        android:drawableLeft="@drawable/ic_plus"
-        android:text="@string/add" />
+        android:layout_gravity="bottom"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/menu_bottom_nav" />
 
 </LinearLayout>

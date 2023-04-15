@@ -10,4 +10,12 @@
     <string name="cancel">Отмена</string>
     <string name="delete">Удалить</string>
     <string name="delete_confirm">Вы уверены, что хотите удалить валюту?</string>
+    <string name="flag">Выбрать флаг</string>
+    <string name="translator">Переводчик</string>
+    <string name="favorites">Избранное</string>
+    <string name="converter">Конвертер</string>
+    <string name="search">Поиск</string>
+    <string name="profile">Профиль</string>
+    <string name="in_kzt">Кол. тенге в валюте</string>
+    <string name="currency_name">Название валюты</string>
 </resources>
