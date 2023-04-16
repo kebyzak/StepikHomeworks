@@ -1,5 +1,6 @@
 package com.example.stepik
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,13 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 
 class ProfileMainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_profile_main, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.fragment_profile_main, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,35 +23,31 @@ class ProfileMainFragment : Fragment() {
     }
 
     private fun initButtons(view: View) {
-        val btnShare: TextView = view.findViewById(R.id.btn_share)
-        btnShare.setOnClickListener {
-            val send = Intent()
-            send.action = Intent.ACTION_SEND
-            send.putExtra(Intent.EXTRA_TEXT, "My Profile")
-            send.type = "..."
-            startActivity(send)
+        view.findViewById<TextView>(R.id.btn_share).setOnClickListener {
+            startActivity(
+                Intent(Intent.ACTION_SEND).setType("text/plain")
+                    .putExtra(Intent.EXTRA_TEXT, "My Profile")
+            )
         }
 
-        val btnEmail: TextView = view.findViewById(R.id.btn_email)
-        btnEmail.setOnClickListener {
-            val email = Intent()
-            email.action = Intent.ACTION_SENDTO
-            email.data = Uri.parse("mailto:")
-            email.putExtra(Intent.EXTRA_TEXT, "My profile!")
-            startActivity(email)
+        view.findViewById<TextView>(R.id.btn_email).setOnClickListener {
+            val email = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:")).putExtra(
+                Intent.EXTRA_TEXT, "My profile!"
+            )
+            try {
+                startActivity(email)
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(context, "Приложение эл.почты не найдено.", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
 
-        val btnCall: TextView = view.findViewById(R.id.btn_call)
-        btnCall.setOnClickListener {
-            val call = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "+77777777777"))
-            startActivity(call)
+        view.findViewById<TextView>(R.id.btn_call).setOnClickListener {
+            startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:+77777777777")))
         }
 
-        val btnCamera: TextView = view.findViewById(R.id.btn_camera)
-        btnCamera.setOnClickListener {
-            val camera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivity(camera)
+        view.findViewById<TextView>(R.id.btn_camera).setOnClickListener {
+            startActivity(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
         }
-
     }
 }

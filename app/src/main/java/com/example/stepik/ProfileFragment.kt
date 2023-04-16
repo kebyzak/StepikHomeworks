@@ -16,22 +16,19 @@ class ProfileFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.fragment_profile, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(view) {
-            tabLayout = findViewById(R.id.tab_layout)
-            viewPagerTwo = findViewById(R.id.viewpager_two)
-        }
+
+        tabLayout = view.findViewById(R.id.tab_layout)
+        viewPagerTwo = view.findViewById(R.id.viewpager_two)
 
         val adapter = ProfileTabAdapter(requireActivity())
         viewPagerTwo.adapter = adapter
 
+        val tabNames = listOf("Основные", "Статистика")
         TabLayoutMediator(tabLayout, viewPagerTwo) { tab, position ->
-            val tabNames = listOf("Основные", "Статистика")
             tab.text = tabNames[position]
         }.attach()
     }
