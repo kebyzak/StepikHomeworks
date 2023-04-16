@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ProfileMainFragment">
+
+    <TextView
+        android:id="@+id/btn_share"
+        style="@style/MainTabButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/share"
+        app:layout_constraintBottom_toTopOf="@id/btn_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_email" />
+
+    <TextView
+        android:id="@+id/btn_email"
+        style="@style/MainTabButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/send_by_email"
+        app:layout_constraintBottom_toTopOf="@id/btn_call"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_share" />
+
+    <TextView
+        android:id="@+id/btn_call"
+        style="@style/MainTabButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/call"
+        app:layout_constraintBottom_toTopOf="@id/btn_camera"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_email" />
+
+    <TextView
+        android:id="@+id/btn_camera"
+        style="@style/MainTabButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/launch_camera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_call" />
+
+</LinearLayout>

@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 class ConverterFragment : Fragment(), CurrBottomSheet.BottomSheetListener {
 
     private lateinit var showBottomSheetBtn: Button
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
