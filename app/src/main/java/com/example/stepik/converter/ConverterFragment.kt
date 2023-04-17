@@ -1,4 +1,4 @@
-package com.example.stepik
+package com.example.stepik.converter
 
 import android.icu.lang.UCharacter.IndicPositionalCategory.LEFT
 import android.icu.lang.UCharacter.IndicPositionalCategory.RIGHT
@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import com.example.stepik.DeleteDialogFragment
+import com.example.stepik.R
 
 class ConverterFragment : Fragment(), CurrBottomSheet.BottomSheetListener {
 

@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_favorites"
-        android:name="com.example.stepik.FavoritesFragment"
+        android:name="com.example.stepik.favorites.FavoritesFragment"
         android:label="@string/favorites"
         tools:layout="@layout/fragment_favorites" />
 
     <fragment
         android:id="@+id/navigation_converter"
-        android:name="com.example.stepik.ConverterFragment"
+        android:name="com.example.stepik.converter.ConverterFragment"
         android:label="Converter"
         tools:layout="@layout/fragment_converter" />
 
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.stepik.ProfileFragment"
+        android:name="com.example.stepik.profile.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile"/>
 </navigation>

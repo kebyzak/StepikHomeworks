@@ -1,9 +1,10 @@
-package com.example.stepik
+package com.example.stepik.converter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.stepik.R
 
 class CurrencyAdapter(
     private val layoutInflater: LayoutInflater, private val onLongClickListener: OnLongClickListener

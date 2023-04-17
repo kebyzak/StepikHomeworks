@@ -1,4 +1,4 @@
-package com.example.stepik
+package com.example.stepik.profile
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import com.example.stepik.R
 
 class ProfileMainFragment : Fragment() {
     override fun onCreateView(

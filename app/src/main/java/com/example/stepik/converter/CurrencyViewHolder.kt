@@ -1,10 +1,11 @@
-package com.example.stepik
+package com.example.stepik.converter
 
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.stepik.R
 
 class CurrencyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val etAmount: EditText = itemView.findViewById(R.id.et_amount)

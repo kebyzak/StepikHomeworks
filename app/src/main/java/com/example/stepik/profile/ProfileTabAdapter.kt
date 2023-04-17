@@ -1,4 +1,4 @@
-package com.example.stepik
+package com.example.stepik.profile
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
