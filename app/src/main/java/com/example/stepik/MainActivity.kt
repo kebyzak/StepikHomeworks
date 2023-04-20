@@ -3,9 +3,9 @@ package com.example.stepik
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 
@@ -14,7 +14,21 @@ const val PIN_LENGTH = 4
 
 class MainActivity : AppCompatActivity() {
     private var pinText = ""
-    lateinit var tvPin: TextView
+    private var pinNumber = 1
+    private lateinit var tvPin: PinCompound
+    private val numButtons = arrayOf(
+        R.id.btn_one,
+        R.id.btn_two,
+        R.id.btn_three,
+        R.id.btn_four,
+        R.id.btn_five,
+        R.id.btn_six,
+        R.id.btn_seven,
+        R.id.btn_eight,
+        R.id.btn_nine,
+        R.id.btn_zero
+    )
+
     var errorColor: Int = Color.BLACK
     var pinTextColor: Int = Color.BLACK
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,47 +52,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initNumButtons() {
-        val btnOne: Button = findViewById(R.id.btn_one)
-        btnOne.setOnClickListener(this::onNumButtonClick)
-
-        val btnTwo: Button = findViewById(R.id.btn_two)
-        btnTwo.setOnClickListener(this::onNumButtonClick)
-
-        val btnThree: Button = findViewById(R.id.btn_three)
-        btnThree.setOnClickListener(this::onNumButtonClick)
-
-        val btnFour: Button = findViewById(R.id.btn_four)
-        btnFour.setOnClickListener(this::onNumButtonClick)
-
-        val btnFive: Button = findViewById(R.id.btn_five)
-        btnFive.setOnClickListener(this::onNumButtonClick)
-
-        val btnSix: Button = findViewById(R.id.btn_six)
-        btnSix.setOnClickListener(this::onNumButtonClick)
-
-        val btnSeven: Button = findViewById(R.id.btn_seven)
-        btnSeven.setOnClickListener(this::onNumButtonClick)
-
-        val btnEight: Button = findViewById(R.id.btn_eight)
-        btnEight.setOnClickListener(this::onNumButtonClick)
-
-        val btnNine: Button = findViewById(R.id.btn_nine)
-        btnNine.setOnClickListener(this::onNumButtonClick)
-
-        val btnZero: Button = findViewById(R.id.btn_zero)
-        btnZero.setOnClickListener(this::onNumButtonClick)
+        for (buttonId in numButtons) {
+            findViewById<Button>(buttonId).setOnClickListener(this::onClick)
+        }
     }
 
     private fun initBackspaceButton() {
         val btnBackspace = findViewById<Button>(R.id.btn_backspace)
         btnBackspace.setOnClickListener {
             pinText = pinText.dropLast(1)
-            updatePinTextView()
+            updateDelete()
         }
 
         btnBackspace.setOnLongClickListener {
-            pinText = pinText.drop(4)
-            updatePinTextView()
+            pinText = ""
+            clear()
+            pinNumber = 1
             true
         }
     }
@@ -90,29 +79,53 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkIfPinIsCorrect() {
-        if (pinText == CORRECT_PIN) {
-            Toast.makeText(this, R.string.pin_is_correct, Toast.LENGTH_LONG).show()
-        } else {
-            tvPin.setTextColor(errorColor)
-        }
-    }
-
-    private fun onNumButtonClick(view: View) {
+    private fun onClick(view: View) {
         if (view !is Button) return
 
         val clickedNum = view.text
         pinText += clickedNum
 
-        updatePinTextView()
+        updatePin(clickedNum.toString())
     }
 
-    private fun updatePinTextView() {
+    private fun updatePin(num: String) {
         if (pinText.length > PIN_LENGTH) {
             pinText = pinText.substring(0, PIN_LENGTH)
+            return
         }
-        tvPin.text = pinText
-        tvPin.setTextColor(pinTextColor)
+
+        val pinViewList = arrayOf(tvPin.pinOne, tvPin.pinTwo, tvPin.pinThree, tvPin.pinFour)
+        val pinView = pinViewList[pinNumber - 1]
+        pinView.text = num
+        pinView.setTextColor(pinTextColor)
+        pinView.border(pinTextColor)
+        pinNumber++
     }
 
+    private fun updateDelete() {
+        if (pinNumber > 1) {
+            val pinViewList = arrayOf(tvPin.pinOne, tvPin.pinTwo, tvPin.pinThree, tvPin.pinFour)
+            val pinView = pinViewList[pinNumber - 2]
+            pinView.text = ""
+            pinView.border(0)
+            pinNumber--
+        }
+    }
+
+
+    private fun clear() {
+        tvPin.clear()
+    }
+
+    private fun checkIfPinIsCorrect() {
+        if (pinText.length != PIN_LENGTH) {
+            Toast.makeText(this, R.string.pin_fits, Toast.LENGTH_LONG).show()
+            tvPin.showError(errorColor)
+            tvPin.clear()
+        } else if (pinText == CORRECT_PIN) {
+            Toast.makeText(this, R.string.pin_correct, Toast.LENGTH_LONG).show()
+        } else {
+            tvPin.showError(errorColor)
+        }
+    }
 }

@@ -26,4 +26,12 @@
         <item name="hintTextColor">@color/hint</item>
         <item name="android:textSize">22sp</item>
     </style>
+
+    <style name="PinEdit">
+        <item name="android:textAlignment">center</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/color_primary</item>
+    </style>
 </resources>

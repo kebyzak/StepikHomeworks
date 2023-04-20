@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Stepik</string>
     <string name="pin_hint">Введите код</string>
-    <string name="pin_is_correct">Код верен</string>
+    <string name="pin_correct">Код верен</string>
+    <string name="pin_fits">Введите код, который содержит 4 цифры</string>
     <string name="btn_one">1</string>
     <string name="btn_two">2</string>
     <string name="btn_three">3</string>
