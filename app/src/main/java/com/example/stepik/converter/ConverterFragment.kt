@@ -26,30 +26,14 @@ import com.google.android.material.textfield.TextInputEditText
 class ConverterFragment : Fragment(), CurrBottomSheet.BottomSheetListener {
 
     private lateinit var showBottomSheetBtn: Button
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_converter, container, false)
-        showBottomSheetBtn = view.findViewById(R.id.btn_open_bs)
-        return view
-    }
-
     private lateinit var adapter: CurrencyAdapter
     private lateinit var rvCurrency: RecyclerView
-    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
-    private var isDeleteCalled: Boolean = false
-    private lateinit var itDelete: Currency
-    private var currentProp: MutableList<Double> = mutableListOf()
+    private var currentRate: MutableList<Double> = mutableListOf()
     private var isDataAvailable = false
 
     private val itemTouchHelper by lazy {
-        ItemTouchHelper(object : SimpleCallback(UP or DOWN, LEFT or RIGHT) {
-
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -68,6 +52,23 @@ class ConverterFragment : Fragment(), CurrBottomSheet.BottomSheetListener {
             }
         })
     }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_converter, container, false)
+        showBottomSheetBtn = view.findViewById(R.id.btn_open_bs)
+        return view
+    }
+
+
+    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
+    private var isDeleteCalled: Boolean = false
+    private lateinit var itDelete: Currency
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -112,39 +113,39 @@ class ConverterFragment : Fragment(), CurrBottomSheet.BottomSheetListener {
         currencies.add(Currency(amount.toString(), R.drawable.img_flag_kz, "Тенге, Казахстан"))
         currencies.add(
             Currency(
-                (amount * currentProp[1]).toString(), R.drawable.img_flag_usa, "Доллары, США"
+                (amount * currentRate[1]).toString(), R.drawable.img_flag_usa, "Доллары, США"
             )
         )
         currencies.add(
             Currency(
-                (amount * currentProp[2]).toString(), R.drawable.img_flag_tr, "Лира, Турция"
+                (amount * currentRate[2]).toString(), R.drawable.img_flag_tr, "Лира, Турция"
             )
         )
         currencies.add(
             Currency(
-                (amount * currentProp[3]).toString(), R.drawable.img_flag_eu, "Евро, EC"
+                (amount * currentRate[3]).toString(), R.drawable.img_flag_eu, "Евро, EC"
             )
         )
         adapter.updateDataSet(currencies)
     }
 
     private fun apiRequest() {
-        currentProp.add(1.0)
+        currentRate.add(1.0)
 
         MainScope().launch {
             withContext(Dispatchers.Default) {
                 RetrofitBuilder.apiService.convertCurrency(API_KEY, "KZT", "USD", 1.0).body()
                     .apply {
-                        currentProp.add(1, this!!.result)
+                        currentRate.add(1, this!!.result)
                     }
                 RetrofitBuilder.apiService.convertCurrency(API_KEY, "KZT", "TRY", 1.0).body()
                     .apply {
-                        currentProp.add(2, this!!.result)
+                        currentRate.add(2, this!!.result)
                     }
 
                 RetrofitBuilder.apiService.convertCurrency(API_KEY, "KZT", "EUR", 1.0).body()
                     .apply {
-                        currentProp.add(3, this!!.result)
+                        currentRate.add(3, this!!.result)
                     }
                 isDataAvailable = true
             }
@@ -171,7 +172,7 @@ class ConverterFragment : Fragment(), CurrBottomSheet.BottomSheetListener {
 
     private fun pinEditText(view: View) {
         val pinnedEt: TextInputEditText = view.findViewById(R.id.et_amount)
-        pinnedEt.doOnTextChanged { text, start, before, count ->
+        pinnedEt.doOnTextChanged { text, _, _, _ ->
             if (text.isNullOrEmpty()) {
                 fillListWithData()
                 return@doOnTextChanged
