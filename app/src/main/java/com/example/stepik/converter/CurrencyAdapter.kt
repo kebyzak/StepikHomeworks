@@ -7,27 +7,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.stepik.R
 
 class CurrencyAdapter(
-    private val layoutInflater: LayoutInflater, private val onLongClickListener: OnLongClickListener
+    private val layoutInflater: LayoutInflater,
+    private val onLongClickListener: (View, Currency) -> Unit
 ) : RecyclerView.Adapter<CurrencyViewHolder>() {
 
-    interface OnLongClickListener {
-        fun onLongClick(itemView: View, currency: Currency)
-    }
-
-
     private val currencies: MutableList<Currency> = mutableListOf()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
-        val view = layoutInflater.inflate(R.layout.item_currency, parent, false)
-        return CurrencyViewHolder(view)
-    }
 
-    override fun getItemCount(): Int {
-        return currencies.size
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder =
+        CurrencyViewHolder(layoutInflater.inflate(R.layout.item_currency, parent, false))
+
+    override fun getItemCount() = currencies.size
 
     fun updateDataSet(newDataSet: List<Currency>) {
-        currencies.clear()
-        currencies.addAll(newDataSet)
+        currencies.apply {
+            clear()
+            addAll(newDataSet)
+        }
         notifyDataSetChanged()
     }
 
@@ -41,12 +36,8 @@ class CurrencyAdapter(
     }
 
     fun moveItem(from: Int, to: Int) {
-        val fromPosition = currencies[from]
-        currencies.removeAt(from)
-        if (to < from) {
-            currencies.add(to, fromPosition)
-        } else {
-            currencies.add(to - 1, fromPosition)
+        currencies.apply {
+            add(if (to < from) to else to - 1, removeAt(from))
         }
     }
 
@@ -56,21 +47,18 @@ class CurrencyAdapter(
     }
 
     fun deleteOnLongClick(currency: Currency) {
+        val position = currencies.indexOf(currency)
         currencies.remove(currency)
-        notifyItemRemoved(currencies.indexOf(currency))
+        notifyItemRemoved(position)
     }
 
     fun sortByAlphabet() {
-        currencies.sortBy { currency ->
-            currency.info
-        }
+        currencies.sortBy { it.info }
         notifyDataSetChanged()
     }
 
     fun sortByPrice() {
-        currencies.sortBy { currency ->
-            currency.amount
-        }
+        currencies.sortBy { it.amount }
         notifyDataSetChanged()
     }
 

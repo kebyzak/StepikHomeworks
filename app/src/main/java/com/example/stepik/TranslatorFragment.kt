@@ -16,17 +16,7 @@ private const val ARG_PRM2 = "param2"
 const val API_KEY = "zsZ83n4OD4LAKbB8gdOoAF8DypPFVsa8"
 
 class TranslatorFragment : Fragment() {
-    private var prm1: String? = null
-    private var prm2: String? = null
     private lateinit var main: TextView
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            prm1 = it.getString(ARG_PRM1)
-            prm2 = it.getString(ARG_PRM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
